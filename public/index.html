@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#000000" />
+    <meta
+      name="description"
+      content="Web site created using create-react-app"
+    />
+    <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
+    <!--
+      manifest.json provides metadata used when your web app is installed on a
+      user's mobile device or desktop. See https://developers.google.com/web/fundamentals/web-app-manifest/
+    -->
+    <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+    <!--
+      Notice the use of %PUBLIC_URL% in the tags above.
+      It will be replaced with the URL of the `public` folder during the build.
+      Only files inside the `public` folder can be referenced from the HTML.
+
+      Unlike "/favicon.ico" or "favicon.ico", "%PUBLIC_URL%/favicon.ico" will
+      work correctly both with client-side routing and a non-root public URL.
+      Learn how to configure a non-root public URL by running `npm run build`.
+    -->
+    <title>React App</title>
+  </head>
+  <body>
+    <!-- <div>
+      <strong>Start: </strong>
+      <select id="start" onchange="calcRoute();">
+        <option
+          value="Helwan Metro Station, Helwan Sharkeya, Helwan, Cairo Governorate 4036440"
+        >
+          Helwan
+        </option>
+        <option value="Ain Helwan Metro Station">Ain Helwan</option>
+        <option value="Helwan University Metro Station">
+          Helwan University
+        </option>
+        <option value="Wadi Hof Metro Station">Wadi Hof</option>
+        <option value="Hadayek Helwan Metro Station">Hadayek Helwan</option>
+        <option value="El-Maasara Metro Station">El-Maasara</option>
+        <option value="Tora El-Asmant Metro Station">Tora El-Asmant</option>
+        <option value="Kozzika Metro Station">Kozzika</option>
+        <option value="Tora El-Balad Metro Station">Tora El-Balad</option>
+        <option value="Sakanat El-Maadi Metro Station">Sakanat El-Maadi</option>
+        <option value="Maadi Metro Station">Maadi</option>
+        <option value="Hadayek El-Maadi Metro Station">Hadayek El-Maadi</option>
+        <option value="Dar El-Salam Metro Station">Dar El-Salam</option>
+        <option value="El-Zahraa' Metro Station">El-Zahraa'</option>
+        <option value="Mar Girgis Metro Station">Mar Girgis</option>
+        <option value="El-Malek El-Saleh Metro Station">
+          El-Malek El-Saleh
+        </option>
+        <option value="Al-Sayeda Zeinab Metro Station">Al-Sayeda Zeinab</option>
+        <option value="Saad Zaghloul Metro Station">Saad Zaghloul</option>
+        <option value="Sadat Metro Station">Sadat</option>
+        <option value="Nasser Metro Station">Nasser</option>
+        <option value="Orabi Metro Station">Orabi</option>
+        <option value="Al-Shohadaa Metro Station">Al-Shohadaa</option>
+        <option value="Ghamra Metro Station">Ghamra</option>
+        <option value="El-Demerdash Metro Station">El-Demerdash</option>
+        <option value="Manshiet El-Sadr Metro Station">Manshiet El-Sadr</option>
+        <option value="Kobri El-Qobba Metro Station">Kobri El-Qobba</option>
+        <option value="Hammamat El-Qobba Metro Station">
+          Hammamat El-Qobba
+        </option>
+        <option value="Saray El-Qobba Metro Station">Saray El-Qobba</option>
+        <option value="Hadayeq El-Zaitoun Metro Station">
+          Hadayeq El-Zaitoun
+        </option>
+        <option value="Helmeyet El-Zaitoun Metro Station">
+          Helmeyet El-Zaitoun
+        </option>
+        <option value="El-Matareyya Metro Station">El-Matareyya</option>
+        <option value="Ain Shams Metro Station">Ain Shams</option>
+        <option value="Ezbet El-Nakhl Metro Station">Ezbet El-Nakhl</option>
+        <option value="El-Marg Metro Station">El-Marg</option>
+        <option value="New El-Marg Metro Station">New El-Marg</option>
+        <option value="Shubra Metro Station">Shubra</option>
+        <option value="Koleyet El Zeraa Metro Station">Koleyet El Zeraa</option>
+        <option value="El Mazallat Metro Station">El Mazallat</option>
+        <option value="El Khalafawi Metro Station">El Khalafawi</option>
+        <option value="St. Teresa Metro Station">St. Teresa</option>
+        <option value="Rod El Farag Metro Station">Rod El Farag</option>
+        <option value="Massara Metro Station">Massara</option>
+        <option value="Al-Shohadaa Metro Station">Al-Shohadaa</option>
+      </select>
+      <strong>End: </strong>
+      <select id="end" onchange="calcRoute();">
+        <option
+          value="Helwan Metro Station, Helwan Sharkeya, Helwan, Cairo Governorate 4036440"
+        >
+          Helwan
+        </option>
+        <option value="Ain Helwan Metro Station">Ain Helwan</option>
+        <option value="Helwan University Metro Station">
+          Helwan University
+        </option>
+        <option value="Wadi Hof Metro Station">Wadi Hof</option>
+        <option value="Hadayek Helwan Metro Station">Hadayek Helwan</option>
+        <option value="El-Maasara Metro Station">El-Maasara</option>
+        <option value="Tora El-Asmant Metro Station">Tora El-Asmant</option>
+        <option value="Kozzika Metro Station">Kozzika</option>
+        <option value="Tora El-Balad Metro Station">Tora El-Balad</option>
+        <option value="Sakanat El-Maadi Metro Station">Sakanat El-Maadi</option>
+        <option value="Maadi Metro Station">Maadi</option>
+        <option value="Hadayek El-Maadi Metro Station">Hadayek El-Maadi</option>
+        <option value="Dar El-Salam Metro Station">Dar El-Salam</option>
+        <option value="El-Zahraa' Metro Station">El-Zahraa'</option>
+        <option value="Mar Girgis Metro Station">Mar Girgis</option>
+        <option value="El-Malek El-Saleh Metro Station">
+          El-Malek El-Saleh
+        </option>
+        <option value="Al-Sayeda Zeinab Metro Station">Al-Sayeda Zeinab</option>
+        <option value="Saad Zaghloul Metro Station">Saad Zaghloul</option>
+        <option value="Sadat Metro Station">Sadat</option>
+        <option value="Nasser Metro Station">Nasser</option>
+        <option value="Orabi Metro Station">Orabi</option>
+        <option value="Al-Shohadaa Metro Station">Al-Shohadaa</option>
+        <option value="Ghamra Metro Station">Ghamra</option>
+        <option value="El-Demerdash Metro Station">El-Demerdash</option>
+        <option value="Manshiet El-Sadr Metro Station">Manshiet El-Sadr</option>
+        <option value="Kobri El-Qobba Metro Station">Kobri El-Qobba</option>
+        <option value="Hammamat El-Qobba Metro Station">
+          Hammamat El-Qobba
+        </option>
+        <option value="Saray El-Qobba Metro Station">Saray El-Qobba</option>
+        <option value="Hadayeq El-Zaitoun Metro Station">
+          Hadayeq El-Zaitoun
+        </option>
+        <option value="Helmeyet El-Zaitoun Metro Station">
+          Helmeyet El-Zaitoun
+        </option>
+        <option value="El-Matareyya Metro Station">El-Matareyya</option>
+        <option value="Ain Shams Metro Station">Ain Shams</option>
+        <option value="Ezbet El-Nakhl Metro Station">Ezbet El-Nakhl</option>
+        <option value="El-Marg Metro Station">El-Marg</option>
+        <option value="New El-Marg Metro Station">New El-Marg</option>
+        <option value="Shubra Metro Station">Shubra</option>
+        <option value="Koleyet El Zeraa Metro Station">Koleyet El Zeraa</option>
+        <option value="El Mazallat Metro Station">El Mazallat</option>
+        <option value="El Khalafawi Metro Station">El Khalafawi</option>
+        <option value="St. Teresa Metro Station">St. Teresa</option>
+        <option value="Rod El Farag Metro Station">Rod El Farag</option>
+        <option value="Massara Metro Station">Massara</option>
+        <option value="Al-Shohadaa Metro Station">Al-Shohadaa</option>
+      </select>
+    </div> -->
+
+    <noscript>You need to enable JavaScript to run this app.</noscript>
+    <div id="root"></div>
+    <!--
+      This HTML file is a template.
+      If you open it directly in the browser, you will see an empty page.
+
+      You can add webfonts, meta tags, or analytics to this file.
+      The build step will place the bundled scripts into the <body> tag.
+
+      To begin the development, run `npm start` or `yarn start`.
+      To create a production bundle, use `npm run build` or `yarn build`.
+    -->
+  </body>
+</html>
