@@ -17,16 +17,17 @@ import {
   Marker,
   Autocomplete,
   DirectionsRenderer,
+  LoadScript
 } from "@react-google-maps/api";
 import { useRef, useState } from "react";
 import customMarkerImage from "./train.png";
 let id = 0;
 const center2 = { lat: 30.004040252614345, lng: 31.70042143719354 };
-const libraries = ["places"];
+const libraries2 = ["places"];
 let f = 0;
 
 let cur_location = { lat: 30.004040252614345, lng: 31.70042143719354 };
-let test = { lat: 30.004040252614345, lng: 31.70042143719354 };
+let test = { lat: 30.053892, lng: 31.240238};
 
 function App() {
   ///-----------------------------------------------------------------------------
@@ -117,7 +118,8 @@ function App() {
   //get the is loaded var
   const { isLoaded } = useJsApiLoader({
     googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
-    libraries,
+    libraries: libraries2,
+    
   });
   // const handleMapLoad = (map) => {
   //   setMap(map);
@@ -222,10 +224,10 @@ function App() {
   // })();
 
   // console.log("hereeeeeeee      yeah     " + cur_loc.lat);
-  setInterval(function () {
-    updateCurrentLocation();
-    handleAddMarkerClick();
-  }, 20000);
+  // setInterval(function () {
+  //   updateCurrentLocation();
+  //   handleAddMarkerClick();
+  // }, 2000000);
   return (
     <Flex
       position="relative"
@@ -238,18 +240,269 @@ function App() {
       <Box position="absolute" left={0} top={0} h="100%" w="100%">
         {/* Google Map Box */}
         {/* <button onClick={handleAddMarkerClick}>Add Marker</button> */}
-
+        {/* <LoadScript googleMapsApiKey={process.env.REACT_APP_GOOGLE_MAPS_API_KEY} libraries={libraries2} mapIds={process.env.MAPID} > */}
+        {/* <LoadScript
+  googleMapsApiKey={process.env.REACT_APP_GOOGLE_MAPS_API_KEY}
+  libraries={libraries2}
+> */}
         <GoogleMap
           center={test}
           zoom={15}
-          mapContainerStyle={{ width: "100%", height: "100%" }} // this is the map size
           options={{
-            // here you are disabling the google maps button like zoom (as the defualt is true )
-            // zoomControl: false,
+            mapId: process.env.MAPID, // Specify the map ID here
             streetViewControl: false,
             mapTypeControl: false,
             fullscreenControl: false,
+            styles:[
+              {
+                "elementType": "geometry",
+                "stylers": [
+                  {
+                    "color": "#f5f5f5"
+                  }
+                ]
+              },
+              {
+                "elementType": "labels.icon",
+                "stylers": [
+                  {
+                    "visibility": "off"
+                  }
+                ]
+              },
+              {
+                "elementType": "labels.text.fill",
+                "stylers": [
+                  {
+                    "color": "#616161"
+                  }
+                ]
+              },
+              {
+                "elementType": "labels.text.stroke",
+                "stylers": [
+                  {
+                    "color": "#f5f5f5"
+                  }
+                ]
+              },
+              {
+                "featureType": "administrative",
+                "stylers": [
+                  {
+                    "visibility": "simplified"
+                  }
+                ]
+              },
+              {
+                "featureType": "administrative.land_parcel",
+                "elementType": "labels.text.fill",
+                "stylers": [
+                  {
+                    "color": "#bdbdbd"
+                  }
+                ]
+              },
+              {
+                "featureType": "poi",
+                "stylers": [
+                  {
+                    "visibility": "off"
+                  }
+                ]
+              },
+              {
+                "featureType": "poi",
+                "elementType": "geometry",
+                "stylers": [
+                  {
+                    "color": "#eeeeee"
+                  }
+                ]
+              },
+              {
+                "featureType": "poi",
+                "elementType": "labels.text.fill",
+                "stylers": [
+                  {
+                    "color": "#757575"
+                  }
+                ]
+              },
+              {
+                "featureType": "poi.park",
+                "elementType": "geometry",
+                "stylers": [
+                  {
+                    "color": "#e5e5e5"
+                  }
+                ]
+              },
+              {
+                "featureType": "poi.park",
+                "elementType": "labels.text.fill",
+                "stylers": [
+                  {
+                    "color": "#9e9e9e"
+                  }
+                ]
+              },
+              {
+                "featureType": "road",
+                "stylers": [
+                  {
+                    "visibility": "simplified"
+                  }
+                ]
+              },
+              {
+                "featureType": "road",
+                "elementType": "geometry",
+                "stylers": [
+                  {
+                    "color": "#ffffff"
+                  }
+                ]
+              },
+              {
+                "featureType": "road.arterial",
+                "elementType": "labels.text.fill",
+                "stylers": [
+                  {
+                    "color": "#757575"
+                  }
+                ]
+              },
+              {
+                "featureType": "road.highway",
+                "stylers": [
+                  {
+                    "visibility": "off"
+                  }
+                ]
+              },
+              {
+                "featureType": "road.highway",
+                "elementType": "geometry",
+                "stylers": [
+                  {
+                    "color": "#dadada"
+                  }
+                ]
+              },
+              {
+                "featureType": "road.highway",
+                "elementType": "labels.text.fill",
+                "stylers": [
+                  {
+                    "color": "#616161"
+                  }
+                ]
+              },
+              {
+                "featureType": "road.local",
+                "stylers": [
+                  {
+                    "visibility": "off"
+                  }
+                ]
+              },
+              {
+                "featureType": "road.local",
+                "elementType": "labels.text.fill",
+                "stylers": [
+                  {
+                    "color": "#9e9e9e"
+                  }
+                ]
+              },
+              {
+                "featureType": "transit",
+                "stylers": [
+                  {
+                    "visibility": "off"
+                  }
+                ]
+              },
+              {
+                "featureType": "transit.line",
+                "stylers": [
+                  {
+                    "color": "#fd3ed2"
+                  },
+                  {
+                    "visibility": "off"
+                  }
+                ]
+              },
+              {
+                "featureType": "transit.line",
+                "elementType": "geometry",
+                "stylers": [
+                  {
+                    "color": "#e5e5e5"
+                  }
+                ]
+              },
+              {
+                "featureType": "transit.station",
+                "elementType": "geometry",
+                "stylers": [
+                  {
+                    "color": "#eeeeee"
+                  }
+                ]
+              },
+              {
+                "featureType": "transit.station.rail",
+                "stylers": [
+                  {
+                    "visibility": "on"
+                  }
+                ]
+              },
+              {
+                "featureType": "transit.station.rail",
+                "elementType": "labels.icon",
+                "stylers": [
+                  {
+                    "color": "#da2c43"
+                  },
+                  {
+                    "weight": 3
+                  }
+                ]
+              },
+              {
+                "featureType": "transit.station.rail",
+                "elementType": "labels.text.fill",
+                "stylers": [
+                  {
+                    "color": "#da2c43"
+                  }
+                ]
+              },
+              {
+                "featureType": "water",
+                "elementType": "geometry",
+                "stylers": [
+                  {
+                    "color": "#c9c9c9"
+                  }
+                ]
+              },
+              {
+                "featureType": "water",
+                "elementType": "labels.text.fill",
+                "stylers": [
+                  {
+                    "color": "#9e9e9e"
+                  }
+                ]
+              }
+            ]
           }}
+          mapContainerStyle={{ width: "100%", height: "100%" }} // this is the map size
           onLoad={(map) => setMap(map)}
         >
           {/* just putting the marker on the center */}
@@ -262,6 +515,8 @@ function App() {
             <Marker key={marker.id} position={marker.position} />
           ))}
         </GoogleMap>
+        {/* </LoadScript> */}
+        {/* </LoadScript> */}
       </Box>
       <Box
         p={4}
@@ -279,7 +534,7 @@ function App() {
               id="start"
               onChange="calcRoute();"
               style={{
-                backgroundColor: "#CE5071",
+                // backgroundColor: "#CE5071",
                 padding: "5px",
                 borderRadius: "5px",
                 border: "none",
@@ -375,7 +630,7 @@ function App() {
               id="end"
               onChange="calcRoute();"
               style={{
-                backgroundColor: "#CE5071",
+                // backgroundColor: "#CE5071",
                 padding: "5px",
                 borderRadius: "5px",
                 border: "none",
@@ -469,7 +724,7 @@ function App() {
           </Box>
 
           <ButtonGroup>
-            <Button colorScheme="green" type="submit" onClick={calculateRoute}>
+            <Button bg="#FF5D00" color="#eee" type="submit" onClick={calculateRoute}>
               Calculate Route
             </Button>
             <IconButton
