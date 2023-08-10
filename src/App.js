@@ -180,7 +180,7 @@ function App() {
     // destiantionRef.current.value = "";
   }
   const handleButtonClick = () => {
-    window.location.href = "http://localhost:5000/simulateRide__";
+    window.location.href = "https://retrometro.vercel.app/";
   };
 
   // Habd  ----------------------------------------------------
