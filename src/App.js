@@ -5,7 +5,6 @@ import {
   Flex,
   HStack,
   IconButton,
-  Input,
   SkeletonText,
   Text,
 } from "@chakra-ui/react";
@@ -17,58 +16,20 @@ import {
   Marker,
   Autocomplete,
   DirectionsRenderer,
-  LoadScript
+  LoadScript,
 } from "@react-google-maps/api";
-import { useRef, useState } from "react";
+import { useState } from "react";
 import customMarkerImage from "./train.png";
 let id = 0;
-const center2 = { lat: 30.004040252614345, lng: 31.70042143719354 };
 const libraries2 = ["places"];
 let f = 0;
 
 let cur_location = { lat: 30.004040252614345, lng: 31.70042143719354 };
-let test = { lat: 30.053892, lng: 31.240238};
+let test = { lat: 30.053892, lng: 31.240238 };
 
 function App() {
-  ///-----------------------------------------------------------------------------
   const [markers, setMarkers] = useState([]);
   const [map, setMap] = useState(null);
-
-  // const addMarker = (location) => {
-  //   const newMarker = {
-  //     position: location,
-  //     id: markers.length, // Assign a unique ID to each marker
-  //   };
-  //   setMarkers((prevMarkers) => [...prevMarkers, newMarker]);
-  // };
-
-  // const handleMarkerClick = (marker) => {
-  //   // Logic to handle marker click event
-  //   console.log("Marker clicked:", marker);
-  // };
-
-  // function updateCurrentLocation() {
-
-  //   if (navigator.geolocation) {
-  //     navigator.geolocation.getCurrentPosition(
-  //       function (position) {
-  //         cur_location = {
-  //           lat: position.coords.latitude,
-  //           lng: position.coords.longitude,
-  //         };
-  //         return cur_location;
-  //         // console.log("Current location:", cur_location);
-  //       },
-  //       function (error) {
-  //         console.log("Error occurred while retrieving location:", error);
-  //       }
-  //     );
-  //   } else {
-  //     console.log("Geolocation is not supported by this browser.");
-  //   }
-  // }
-  // updateCurrentLocation()
-  // let intervalId;
 
   function updateCurrentLocation() {
     return new Promise((resolve, reject) => {
@@ -97,7 +58,6 @@ function App() {
       }
     });
   }
-  let res;
   async function run() {
     cur_location = await updateCurrentLocation();
     test.lat = cur_location.latitude;
@@ -108,23 +68,11 @@ function App() {
     run();
     f = 1;
   }
-  // setTimeout(function () {
-  //   console.log("cneter", center2);
-  //   console.log("cur", cur_location);
-  // }, 5000);
-  // startUpdatingLocation()
-  // console.log('my loc ' ,cur_location);
-  ///---------------------------------------------------------
-  //get the is loaded var
+
   const { isLoaded } = useJsApiLoader({
     googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
     libraries: libraries2,
-    
   });
-  // const handleMapLoad = (map) => {
-  //   setMap(map);
-  // };
-  // const [map, setMap] = useState(/** @type google.maps.Map */ (null)); // the at type to get the auto complete in for map sunftion
   const handleAddMarkerClick = () => {
     const newMarker = {
       position: {
@@ -142,34 +90,8 @@ function App() {
   const [distance, setDistance] = useState("");
   const [duration, setDuration] = useState("");
 
-  /** @type React.MutableRefObject<HTMLInputElement> */
-  // const originRef = useRef();
-  /** @type React.MutableRefObject<HTMLInputElement> */
-  // const destiantionRef = useRef();
-
-  /* check if the map is loaded or not*/
   if (!isLoaded) {
     return <SkeletonText />;
-  }
-
-  async function calculateRoute() {
-    // if (originRef.current.value === "" || destiantionRef.current.value === "") {
-    //   return;
-    // }
-    // eslint-disable-next-line no-undef
-    const directionsService = new google.maps.DirectionsService();
-    var start = document.getElementById("start").value;
-    var end = document.getElementById("end").value;
-    const results = await directionsService.route({
-      origin: start,
-      destination: end,
-      // eslint-disable-next-line no-undef
-      travelMode: google.maps.TravelMode.TRANSIT,
-    });
-
-    setDirectionsResponse(results);
-    setDistance(results.routes[0].legs[0].distance.text);
-    setDuration(results.routes[0].legs[0].duration.text);
   }
 
   function clearRoute() {
@@ -182,52 +104,21 @@ function App() {
   const handleButtonClick = () => {
     window.location.href = "https://retrometro.vercel.app/";
   };
+  async function calculateRoute() {
+    const directionsService = new window.google.maps.DirectionsService();
+    let start = document.getElementById("start").value;
+    let end = document.getElementById("end").value;
+    const results = await directionsService.route({
+      origin: start,
+      destination: end,
+      travelMode: window.google.maps.TravelMode.TRANSIT,
+    });
 
-  // Habd  ----------------------------------------------------
+    setDirectionsResponse(results);
+    setDistance(results.routes[0].legs[0].distance.text);
+    setDuration(results.routes[0].legs[0].duration.text);
+  }
 
-  // async function getUserLocation(apiKey) {
-  //   const url = `https://www.googleapis.com/geolocation/v1/geolocate?key=${apiKey}`;
-
-  //   try {
-  //     const response = await fetch(url, {
-  //       method: "POST",
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //       },
-  //     });
-
-  //     const data = await response.json();
-  //     const { location } = data;
-  //     const userLocation = {
-  //       latitude: location.lat,
-  //       longitude: location.lng,
-  //     };
-
-  //     return userLocation;
-  //   } catch (error) {
-  //     console.error("Error getting user location:", error);
-  //     return null;
-  //   }
-  // }
-
-  // console.log("here ");
-
-  // (async () => {
-  //   let lol = await getUserLocation(process.env.REACT_APP_GOOGLE_MAPS_API_KEY);
-  //   cur_loc = {
-  //     lat: lol.latitude,
-  //     lng: lol.longitude,
-  //   };
-  //   console.log("current", cur_loc.lat);
-  //   console.log("current", cur_loc.lng);
-  //   console.log("hyr    ", lol.longitude);
-  // })();
-
-  // console.log("hereeeeeeee      yeah     " + cur_loc.lat);
-  // setInterval(function () {
-  //   updateCurrentLocation();
-  //   handleAddMarkerClick();
-  // }, 2000000);
   return (
     <Flex
       position="relative"
@@ -236,15 +127,7 @@ function App() {
       h="100vh"
       w="100vw"
     >
-      {/* this box is the full scree map*/}
       <Box position="absolute" left={0} top={0} h="100%" w="100%">
-        {/* Google Map Box */}
-        {/* <button onClick={handleAddMarkerClick}>Add Marker</button> */}
-        {/* <LoadScript googleMapsApiKey={process.env.REACT_APP_GOOGLE_MAPS_API_KEY} libraries={libraries2} mapIds={process.env.MAPID} > */}
-        {/* <LoadScript
-  googleMapsApiKey={process.env.REACT_APP_GOOGLE_MAPS_API_KEY}
-  libraries={libraries2}
-> */}
         <GoogleMap
           center={test}
           zoom={15}
@@ -253,254 +136,254 @@ function App() {
             streetViewControl: false,
             mapTypeControl: false,
             fullscreenControl: false,
-            styles:[
+            styles: [
               {
-                "elementType": "geometry",
-                "stylers": [
+                elementType: "geometry",
+                stylers: [
                   {
-                    "color": "#f5f5f5"
-                  }
-                ]
+                    color: "#f5f5f5",
+                  },
+                ],
               },
               {
-                "elementType": "labels.icon",
-                "stylers": [
+                elementType: "labels.icon",
+                stylers: [
                   {
-                    "visibility": "off"
-                  }
-                ]
+                    visibility: "off",
+                  },
+                ],
               },
               {
-                "elementType": "labels.text.fill",
-                "stylers": [
+                elementType: "labels.text.fill",
+                stylers: [
                   {
-                    "color": "#616161"
-                  }
-                ]
+                    color: "#616161",
+                  },
+                ],
               },
               {
-                "elementType": "labels.text.stroke",
-                "stylers": [
+                elementType: "labels.text.stroke",
+                stylers: [
                   {
-                    "color": "#f5f5f5"
-                  }
-                ]
+                    color: "#f5f5f5",
+                  },
+                ],
               },
               {
-                "featureType": "administrative",
-                "stylers": [
+                featureType: "administrative",
+                stylers: [
                   {
-                    "visibility": "simplified"
-                  }
-                ]
+                    visibility: "simplified",
+                  },
+                ],
               },
               {
-                "featureType": "administrative.land_parcel",
-                "elementType": "labels.text.fill",
-                "stylers": [
+                featureType: "administrative.land_parcel",
+                elementType: "labels.text.fill",
+                stylers: [
                   {
-                    "color": "#bdbdbd"
-                  }
-                ]
+                    color: "#bdbdbd",
+                  },
+                ],
               },
               {
-                "featureType": "poi",
-                "stylers": [
+                featureType: "poi",
+                stylers: [
                   {
-                    "visibility": "off"
-                  }
-                ]
+                    visibility: "off",
+                  },
+                ],
               },
               {
-                "featureType": "poi",
-                "elementType": "geometry",
-                "stylers": [
+                featureType: "poi",
+                elementType: "geometry",
+                stylers: [
                   {
-                    "color": "#eeeeee"
-                  }
-                ]
+                    color: "#eeeeee",
+                  },
+                ],
               },
               {
-                "featureType": "poi",
-                "elementType": "labels.text.fill",
-                "stylers": [
+                featureType: "poi",
+                elementType: "labels.text.fill",
+                stylers: [
                   {
-                    "color": "#757575"
-                  }
-                ]
+                    color: "#757575",
+                  },
+                ],
               },
               {
-                "featureType": "poi.park",
-                "elementType": "geometry",
-                "stylers": [
+                featureType: "poi.park",
+                elementType: "geometry",
+                stylers: [
                   {
-                    "color": "#e5e5e5"
-                  }
-                ]
+                    color: "#e5e5e5",
+                  },
+                ],
               },
               {
-                "featureType": "poi.park",
-                "elementType": "labels.text.fill",
-                "stylers": [
+                featureType: "poi.park",
+                elementType: "labels.text.fill",
+                stylers: [
                   {
-                    "color": "#9e9e9e"
-                  }
-                ]
+                    color: "#9e9e9e",
+                  },
+                ],
               },
               {
-                "featureType": "road",
-                "stylers": [
+                featureType: "road",
+                stylers: [
                   {
-                    "visibility": "simplified"
-                  }
-                ]
+                    visibility: "simplified",
+                  },
+                ],
               },
               {
-                "featureType": "road",
-                "elementType": "geometry",
-                "stylers": [
+                featureType: "road",
+                elementType: "geometry",
+                stylers: [
                   {
-                    "color": "#ffffff"
-                  }
-                ]
+                    color: "#ffffff",
+                  },
+                ],
               },
               {
-                "featureType": "road.arterial",
-                "elementType": "labels.text.fill",
-                "stylers": [
+                featureType: "road.arterial",
+                elementType: "labels.text.fill",
+                stylers: [
                   {
-                    "color": "#757575"
-                  }
-                ]
+                    color: "#757575",
+                  },
+                ],
               },
               {
-                "featureType": "road.highway",
-                "stylers": [
+                featureType: "road.highway",
+                stylers: [
                   {
-                    "visibility": "off"
-                  }
-                ]
+                    visibility: "off",
+                  },
+                ],
               },
               {
-                "featureType": "road.highway",
-                "elementType": "geometry",
-                "stylers": [
+                featureType: "road.highway",
+                elementType: "geometry",
+                stylers: [
                   {
-                    "color": "#dadada"
-                  }
-                ]
+                    color: "#dadada",
+                  },
+                ],
               },
               {
-                "featureType": "road.highway",
-                "elementType": "labels.text.fill",
-                "stylers": [
+                featureType: "road.highway",
+                elementType: "labels.text.fill",
+                stylers: [
                   {
-                    "color": "#616161"
-                  }
-                ]
+                    color: "#616161",
+                  },
+                ],
               },
               {
-                "featureType": "road.local",
-                "stylers": [
+                featureType: "road.local",
+                stylers: [
                   {
-                    "visibility": "off"
-                  }
-                ]
+                    visibility: "off",
+                  },
+                ],
               },
               {
-                "featureType": "road.local",
-                "elementType": "labels.text.fill",
-                "stylers": [
+                featureType: "road.local",
+                elementType: "labels.text.fill",
+                stylers: [
                   {
-                    "color": "#9e9e9e"
-                  }
-                ]
+                    color: "#9e9e9e",
+                  },
+                ],
               },
               {
-                "featureType": "transit",
-                "stylers": [
+                featureType: "transit",
+                stylers: [
                   {
-                    "visibility": "off"
-                  }
-                ]
+                    visibility: "off",
+                  },
+                ],
               },
               {
-                "featureType": "transit.line",
-                "stylers": [
+                featureType: "transit.line",
+                stylers: [
                   {
-                    "color": "#fd3ed2"
+                    color: "#fd3ed2",
                   },
                   {
-                    "visibility": "off"
-                  }
-                ]
+                    visibility: "off",
+                  },
+                ],
               },
               {
-                "featureType": "transit.line",
-                "elementType": "geometry",
-                "stylers": [
+                featureType: "transit.line",
+                elementType: "geometry",
+                stylers: [
                   {
-                    "color": "#e5e5e5"
-                  }
-                ]
+                    color: "#e5e5e5",
+                  },
+                ],
               },
               {
-                "featureType": "transit.station",
-                "elementType": "geometry",
-                "stylers": [
+                featureType: "transit.station",
+                elementType: "geometry",
+                stylers: [
                   {
-                    "color": "#eeeeee"
-                  }
-                ]
+                    color: "#eeeeee",
+                  },
+                ],
               },
               {
-                "featureType": "transit.station.rail",
-                "stylers": [
+                featureType: "transit.station.rail",
+                stylers: [
                   {
-                    "visibility": "on"
-                  }
-                ]
+                    visibility: "on",
+                  },
+                ],
               },
               {
-                "featureType": "transit.station.rail",
-                "elementType": "labels.icon",
-                "stylers": [
+                featureType: "transit.station.rail",
+                elementType: "labels.icon",
+                stylers: [
                   {
-                    "color": "#da2c43"
+                    color: "#da2c43",
                   },
                   {
-                    "weight": 3
-                  }
-                ]
+                    weight: 3,
+                  },
+                ],
               },
               {
-                "featureType": "transit.station.rail",
-                "elementType": "labels.text.fill",
-                "stylers": [
+                featureType: "transit.station.rail",
+                elementType: "labels.text.fill",
+                stylers: [
                   {
-                    "color": "#da2c43"
-                  }
-                ]
+                    color: "#da2c43",
+                  },
+                ],
               },
               {
-                "featureType": "water",
-                "elementType": "geometry",
-                "stylers": [
+                featureType: "water",
+                elementType: "geometry",
+                stylers: [
                   {
-                    "color": "#c9c9c9"
-                  }
-                ]
+                    color: "#c9c9c9",
+                  },
+                ],
               },
               {
-                "featureType": "water",
-                "elementType": "labels.text.fill",
-                "stylers": [
+                featureType: "water",
+                elementType: "labels.text.fill",
+                stylers: [
                   {
-                    "color": "#9e9e9e"
-                  }
-                ]
-              }
-            ]
+                    color: "#9e9e9e",
+                  },
+                ],
+              },
+            ],
           }}
           mapContainerStyle={{ width: "100%", height: "100%" }} // this is the map size
           onLoad={(map) => setMap(map)}
@@ -515,8 +398,6 @@ function App() {
             <Marker key={marker.id} position={marker.position} />
           ))}
         </GoogleMap>
-        {/* </LoadScript> */}
-        {/* </LoadScript> */}
       </Box>
       <Box
         p={4}
@@ -532,7 +413,6 @@ function App() {
             <strong>Start: </strong>
             <select
               id="start"
-              onChange="calcRoute();"
               style={{
                 // backgroundColor: "#CE5071",
                 padding: "5px",
@@ -628,7 +508,6 @@ function App() {
             <strong>End: </strong>
             <select
               id="end"
-              onChange="calcRoute();"
               style={{
                 // backgroundColor: "#CE5071",
                 padding: "5px",
@@ -724,7 +603,12 @@ function App() {
           </Box>
 
           <ButtonGroup>
-            <Button bg="#FF5D00" color="#eee" type="submit" onClick={calculateRoute}>
+            <Button
+              bg="#FF5D00"
+              color="#eee"
+              type="submit"
+              onClick={calculateRoute}
+            >
               Calculate Route
             </Button>
             <IconButton
